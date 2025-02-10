@@ -1,10 +1,9 @@
+ 
 export default function Home() {
     return (
-        <html lang="en">
-            <body >
-                <div >login</div>
-            </body>
-            </html>
+       
+                <div className="mt-6">login</div>
+          
        
             )
          }

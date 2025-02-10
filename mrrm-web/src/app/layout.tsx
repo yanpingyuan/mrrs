@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import './globals.css';
 
 import {AppRouterCacheProvider} from '@mui/material-nextjs/v15-appRouter';
 import { StyledRoot } from './styledRoot';
@@ -17,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       {/* <body className={`${geistSans.variable} ${geistMono.variable}`}> */}
       <body >
-        <div>32423</div>
+        <div className="mt-4 text-center">32423</div>
         <AppRouterCacheProvider>
           <StyledRoot>{children}</StyledRoot>
         </AppRouterCacheProvider>
