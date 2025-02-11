@@ -17,10 +17,9 @@ export default async function RootLayout({
   const headerList = await headers();
  
   const pathname = headerList.get("x-current-path");
-  console.log('3242:' +pathname);
   
   if (pathname=== '/login'){
-    return <html lang="en"><body>{children}</body></html>
+    return <html lang="en" suppressHydrationWarning><body suppressHydrationWarning>{children}</body></html>
   }
   return (
     <html lang="en">
