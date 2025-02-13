@@ -11,6 +11,7 @@ export default function Home() {
             <Avatar sx={{ bgcolor: blue[500], width: 60, height: 60 }}>
                 <PersonIcon />
             </Avatar>
+            
             </Box>
         </div>
        
