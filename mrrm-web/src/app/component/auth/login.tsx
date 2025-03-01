@@ -12,7 +12,6 @@ export default function LoginForm() {
     const router = useRouter();
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [errors, setErrors] = useState({ email: '', password: '' });
-    const [user, setUser] = useState({});
 
     const handleChange = (e:  any) => {
         e.preventDefault();
@@ -49,9 +48,12 @@ export default function LoginForm() {
             console.log(response.statusText);
             const result = await response.json();
             setUserInfo(result);
-            router.push('/');
+            if(result.IsAdmin){
+                router.push('/dashboard/meetingRoom');
+            } else{
+                router.push('/dashboard/meetings');   
+            }
         }
-       
     };
 
     return(
