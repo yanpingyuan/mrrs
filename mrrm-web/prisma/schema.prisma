@@ -21,4 +21,27 @@ model User {
   IsAdmin Boolean @default(false)
   Phone String
   Password String
+  Reservations Reservations[]
+}
+
+model Room {
+  RoomId Int    @id @default(autoincrement())
+  Name   String @unique
+  CreateTime DateTime @default(now())
+  Description String
+  Capacity Int @default(1)
+  Reservations Reservations[]
+}
+
+model Reservations {
+  ReservationId Int    @id @default(autoincrement())
+  
+  StartTime DateTime
+  EndTime DateTime
+  Note String
+  CreateTime DateTime @default(now())
+  User User @relation(fields: [UserId], references: [UserId])
+  Room Room @relation(fields: [RoomId], references: [RoomId])
+  UserId Int
+  RoomId Int
 }
