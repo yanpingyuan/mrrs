@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { NextResponse } from "next/server"
 import validator from "validator";
 import bcrypt from 'bcrypt';
+import { generateToken } from "@/lib/utils";
 
 // export default async function handler(
 //     req: NextApiRequest,
@@ -42,7 +43,11 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     if(bcrypt.compareSync(data.password, loginUser.Password) == false) { //compare password
         return NextResponse.json({ message: 'Invalid password' }, { status: 400 })
     }
+
+    var token = await generateToken({ email: loginUser.Email, userId: loginUser.UserId, IsAdmin: loginUser.IsAdmin });
      //res.status(200).json(user)
-  return NextResponse.json(loginUser, { status: 200 })
+  var response = NextResponse.json(loginUser, { status: 200 });
+  response.cookies.set('token', token, { httpOnly: true, sameSite: 'strict', path: '/', maxAge: 60 * 60 * 24 * 3, secure: process.env.NODE_ENV === 'development' });
+  return response  ;
 
     }

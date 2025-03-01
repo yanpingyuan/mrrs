@@ -24,8 +24,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       {/* <body className={`${geistSans.variable} ${geistMono.variable}`}> */}
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      </head>
       <body >
-        <div className="mt-4 text-center">32423</div>
         <AppRouterCacheProvider>
           <StyledRoot>{children}</StyledRoot>
         </AppRouterCacheProvider>

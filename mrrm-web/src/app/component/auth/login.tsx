@@ -1,9 +1,15 @@
 "use client"
 
+import useLocalStorage from "@/app/hooks/useLocalStorage";
 import TextField from "@mui/material/TextField";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+// Custom hook to use local storage
+
 export default function LoginForm() {
+    const [userInfo, setUserInfo] = useLocalStorage("userInfo", {})
+    const router = useRouter();
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [errors, setErrors] = useState({ email: '', password: '' });
     const [user, setUser] = useState({});
@@ -27,21 +33,25 @@ export default function LoginForm() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //const formData = new FormData(e.currentTarget);
-        // if (validate()) {
-        //     console.log('Form data:', formData);
-        // }
-       
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/login`,  {
+        var url = `${process.env.NEXT_PUBLIC_API_BASE_URL as string}/api/auth/login`;
+        console.log(url);
+        const response = await fetch(url,  {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(formData),
         });
-        const result = await response.json();
-        console.log(result);
-         
+        if(response.status !== 200) {
+            console.log(response.statusText);
+            return;
+        }else{
+            console.log(response.statusText);
+            const result = await response.json();
+            setUserInfo(result);
+            router.push('/');
+        }
+       
     };
 
     return(
