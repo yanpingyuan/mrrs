@@ -3,6 +3,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { headers } from 'next/headers';
 import { StyledRoot } from "../styledRoot";
 import Header from "../component/layout/header";
+import Nav from "../component/layout/nav";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -22,33 +23,25 @@ export default async function RootLayout({
         return <html lang="en" suppressHydrationWarning><body suppressHydrationWarning>{children}</body></html>
     }
     return (
-        <html lang="en">
-            {/* <body className={`${geistSans.variable} ${geistMono.variable}`}> */}
-            <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-            </head>
-            <body >
+       
                 
                 <AppRouterCacheProvider>
                     <StyledRoot> <div className="flex flex-col h-screen">
-                        <header className="h-20 bg-gray-200  shrink-0">
+                <header className="h-20 bg-gray-200  shrink-0 shadow-[rgba(216, 16, 16, 0.87)_0px_5px_4px_0px]">
                             <Header />
-                        </header>
-                        <div className="flex flex-row h-[calc(100vh-5rem)]">
-                            <div className="w-60 bg-blue-300">
-                                left
-                            </div>
-                            <main className="bg-blue-500 w-full overflow-y-auto">
-                                {children}
-                            </main>
-                        </div>
-                        {/* <footer className={styles.footer}>434
-                        </footer> */}
-                    </div></StyledRoot>
+                </header>
+                <div className="flex flex-row h-[calc(100vh-5rem)]">
+                    <div className="w-60 ">
+                        <Nav ></Nav>
+                    </div>
+                    <main className=" w-full overflow-y-auto">
+                        {children}
+                    </main>
+                </div>
+                {/* <footer className={styles.footer}>434
+                </footer> */}
+            </div></StyledRoot>
                 </AppRouterCacheProvider>
-            </body>
-
-            {/* </body> */}
-        </html>
+           
     );
 }
