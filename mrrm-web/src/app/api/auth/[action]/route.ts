@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 import { generateToken } from "@/lib/utils";
 import { request } from "http";
 import LoginForm from "@/app/component/auth/login";
+import { json } from "stream/consumers";
 
 // export default async function handler(
 //     req: NextApiRequest,
@@ -49,6 +50,7 @@ export async function POST(req: NextApiRequest,  context: { params: { action: st
     //res.status(200).json(user)
     var response = NextResponse.json(loginUser, { status: 200 });
     response.cookies.set('token', token, { httpOnly: true, sameSite: 'strict', path: '/', maxAge: 60 * 60 * 24 * 3, secure: process.env.NODE_ENV === 'development' });
+    response.cookies.set('loginUser', JSON.stringify(loginUser),  { httpOnly: true, sameSite: 'strict', path: '/', maxAge: 60 * 60 * 24 * 3, secure: process.env.NODE_ENV === 'development' });
     return response;
   } else if(action === 'logout') {
     var res = NextResponse.json({ message: 'Logout successful' }, { status: 200 });
