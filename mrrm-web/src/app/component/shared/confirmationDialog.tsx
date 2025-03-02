@@ -48,12 +48,10 @@ function ConfirmationDialog(props: ConfirmParams) {
         <Dialog
             open={open}
             onClose={hideDialog}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
         >
-            <DialogTitle id="alert-dialog-title">{props.title}</DialogTitle>
+            <DialogTitle >{props.title}</DialogTitle>
             <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText >
                     {props.description}
                 </DialogContentText>
             </DialogContent>

@@ -13,3 +13,10 @@ interface ConfirmParams {
   description: string;
   response: () => void;
 }
+
+interface UserFormParams {
+  open: boolean;
+  title: string;
+  response: () => void;
+  userInfo: UserInfo | null;
+}

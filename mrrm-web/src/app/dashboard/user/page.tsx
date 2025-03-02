@@ -1,6 +1,7 @@
 "use client";
 
 import ConfirmationDialog from "@/app/component/shared/confirmationDialog";
+import UserFormDialog from "@/app/component/UserFormDialog";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
@@ -9,31 +10,41 @@ import { useEffect, useState } from "react";
 export default function Home() {
     const [users, setUsers] = useState<UserInfo[]>([]);
     const [openDelete, setOpenDelete] = useState(false);
+    const [openCreate, setOpenCreate] = useState(false);
     const [currentUser, setCurrentUser] = useState<UserInfo | null>(null);
 
    useEffect(  () => {
+       getUsers();
+    }, []);
+
+    const getUsers = () => {
         fetch('/api/user').then(res => res.json()).then(data => {
             setUsers(data);
         })
-    }, []);
-
-    const handleCreateUser = () => {
-        console.log('create user')
     }
 
-    const openDeleteModal = (user: UserInfo) =>() => {
-       setCurrentUser(user);
+    const handleCreateUser = (user: UserInfo | null) => (e: any) => {
+        e.preventDefault();
+        setCurrentUser(user);
+        setOpenCreate(true);
+    }
+
+    const openDeleteModal = (user: UserInfo) =>(e:any) => {
+        e.preventDefault();
+        setCurrentUser(user);
         setOpenDelete(true);
     }
 
     const deleteUser = () => {
+        fetch(`/api/user/${currentUser?.UserId}`, {
+            method: 'DELETE'
+        }).then(res => res.json()).then(data => {
+            if(data) {
+                getUsers();
+                setOpenDelete(false);
+            }
+        })
         console.log(currentUser?.Email);
-    }
-
-    const openEditModal = (user: UserInfo) =>() => {
-        if(user){
-            console.log('edit user', user.Email);
-        }
     }
 
     return (
@@ -42,7 +53,7 @@ export default function Home() {
                 <div className="w-[20%] ">
                     用户管理
                     </div>
-                <button onClick={handleCreateUser} className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">添加用户</button>
+                <button onClick={handleCreateUser(null)} className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">添加用户</button>
              </div>
             <table className="w-full mt-4">
                 <thead>
@@ -64,15 +75,10 @@ export default function Home() {
                             <td className="border-b-2 border-gray-300">{user.IsAdmin ? 'Admin' : 'User'}</td>
                             <td className="border-b-2 border-gray-300">
                                 <div className="flex justify-center">
-
-                                 
-                                        
                                         <IconButton onClick={openDeleteModal(user)}>
                                                 <DeleteForeverIcon className="text-red-500 cursor-pointer" />
                                             </IconButton> 
-                                       
-                                   
-                                    <IconButton onClick={openEditModal(user)}>
+                                    <IconButton onClick={handleCreateUser(user)}>
                                     <EditIcon className="text-blue-500 cursor-pointer" />
                                 </IconButton>
                                 </div>
@@ -90,6 +96,12 @@ export default function Home() {
             >
 
             </ConfirmationDialog>
+            <UserFormDialog
+                open={openCreate}   
+                response={() => { getUsers(); }}   
+                title= {currentUser? "编辑用户" : "添加用户"}
+                userInfo={currentUser}
+            ></UserFormDialog>
         </div>
     );
 }
