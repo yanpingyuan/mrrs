@@ -2,8 +2,10 @@
 
 import useLocalStorage from "@/app/hooks/useLocalStorage";
 import TextField from "@mui/material/TextField";
+import { error } from "console";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import validator from "validator";
 
 // Custom hook to use local storage
 
@@ -12,22 +14,31 @@ export default function LoginForm() {
     const router = useRouter();
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [errors, setErrors] = useState({ email: '', password: '' });
+    const [isFormValid, setIsFormValid] = useState(false);
 
     const handleChange = (e:  any) => {
         e.preventDefault();
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         }); 
+       
     }
 
+    useEffect(() => {
+        validate();
+    }, [formData]);
+
+    useEffect(() => {
+        setIsFormValid(errors.email === '' && errors.password === '');
+    }, [errors]);
+
     const validate = () => {
-        // let tempErrors = {email: '', password: ''};
-        // tempErrors.email = formData.email ? '' : 'Name is required';
-        // tempErrors.email = formData.email ? '' : 'Email is required';
-        // setErrors(tempErrors);
-        // return Object.values(tempErrors).every((x) => x === '');
-        return true;
+        let tempErrors = {email: '', password: ''};
+        tempErrors.email = formData.email&& validator.isEmail(formData.email) ? '' : 'email is required';
+        tempErrors.password = formData.password && formData.password.length>0 ? '' : 'password is required';
+        setErrors(tempErrors);
+        console.log(errors);
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -74,6 +85,8 @@ export default function LoginForm() {
                                 // helperText={errors.email}
                                 fullWidth
                                 margin="normal"
+                                error={errors.email === "" ? false : true}
+                                helperText={errors.email}
                             />
                             <TextField
                             type="password"
@@ -85,6 +98,8 @@ export default function LoginForm() {
                                 // helperText={errors.password}
                                 fullWidth
                                 margin="normal"
+                                error={formData.password === "" ? true : false}
+                                helperText={errors.password }
                             />
 
                             <div className="flex flex-wrap items-center justify-between gap-4">
@@ -97,7 +112,11 @@ export default function LoginForm() {
                             </div>
 
                             <div className="!mt-8">
-                                <button type="submit" className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                                <button type="submit"
+                                    className={`w-full py-3 px-4 text-sm  rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none ${isFormValid ? "bg-blue-600" : "bg-gray-300"}`}
+                                   
+                                   disabled={!isFormValid}
+                                >
                                     Sign in
                                 </button>
                             </div>
