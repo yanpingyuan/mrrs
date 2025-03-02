@@ -50,19 +50,6 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
   return NextResponse.json(user, { status: 200 })
 }
 
-// export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
-//   var data = await new Response(req.body).json();
-
-//   var { id } = data;
-
-
-//   await prisma.user.delete({
-//     where: { UserId: id },
-//   });
-//   //res.status(200).json(user)
-//   return NextResponse.json({message: 'User deleted successfully'}, { status: 200
-//   })
-// }
 
 export async function PUT(req: NextApiRequest, res: NextApiResponse) {
   var data = await new Response(req.body).json();

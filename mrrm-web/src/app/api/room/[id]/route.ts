@@ -6,10 +6,10 @@ export async function DELETE(req: NextApiRequest, context: { params: { id: strin
     const { id } = await context.params; 
 console.log(id)
 
-  await prisma.user.delete({
-      where: { UserId: parseInt(id)  }
+  await prisma.room.delete({
+      where: { RoomId: parseInt(id)  }
   });
-  //res.status(200).json(user)
+
   
   return NextResponse.json({message: 'User deleted successfully'}, { status: 200
   })
