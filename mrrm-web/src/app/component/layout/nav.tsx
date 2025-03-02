@@ -14,7 +14,7 @@ export default async function Home() {
     { text: "个人信息", url: "/dashboard/user" }];
     const cookieStore = await cookies()
     const userStr = cookieStore.get('loginUser');
-    const userInfo = JSON.parse(userStr?.value as string);
+    const userInfo = userStr!=undefined && JSON.parse(userStr?.value as string);
     const navs=[
     { text: "我的会议", url: "/dashboard/meetings" },
     { text: "个人信息", url: "/dashboard/user" }];
