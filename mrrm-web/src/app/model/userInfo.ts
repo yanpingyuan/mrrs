@@ -8,10 +8,8 @@ interface UserInfo {
 }
 
 interface ConfirmParams {
-  response:any;
-  title:string;
-  description:string;
-  children?:any;
-  open:boolean
-  
+  open: boolean;
+  title: string;
+  description: string;
+  response: () => void;
 }

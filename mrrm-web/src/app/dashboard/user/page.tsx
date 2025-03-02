@@ -86,7 +86,7 @@ export default function Home() {
                 title="确认删除"
                 description="你确定要删除这条记录?"
                 open={openDelete}
-                response={deleteUser()}
+                response={deleteUser}
             >
 
             </ConfirmationDialog>

@@ -3,51 +3,69 @@ import { useEffect, useState } from "react";
 
 
 function ConfirmationDialog(props: ConfirmParams) {
-    //local states
-   
     const [open, setOpen] = useState(false);
+
     useEffect(() => {
-        setOpen(props.open);
-    }, [props.open]);
-    const showDialog = () => {
-        setOpen(true);
-    };
+        if (props !== null && props.open !== null) {
+            setOpen(props.open);
+        }
+    }, [props]);
 
     const hideDialog = () => {
-        setOpen(false);
+        if (setOpen !== null && typeof setOpen === 'function') {
+            setOpen(false);
+        }
     };
 
     const confirmRequest = () => {
-        props.response();
+        if (props !== null && props.response !== null && typeof props.response === 'function') {
+            props.response();
+        }
         hideDialog();
     };
 
+    if (props === null) {
+        throw new Error('ConfirmationDialog props is null');
+    }
+
+    if (props.open === null) {
+        throw new Error('ConfirmationDialog props.open is null');
+    }
+
+    if (props.title === null || props.title === undefined) {
+        throw new Error('ConfirmationDialog props.title is null or undefined');
+    }
+
+    if (props.description === null || props.description === undefined) {
+        throw new Error('ConfirmationDialog props.description is null or undefined');
+    }
+
+    if (props.response === null || props.response === undefined) {
+        throw new Error('ConfirmationDialog props.response is null or undefined');
+    }
+
     return (
-        <>
-            {open && (
-                <Dialog 
-                    open={open}
-                    onClose={hideDialog}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">{props.title}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            {props.description}
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={confirmRequest} color="primary">
-                            Yes
-                        </Button>
-                        <Button onClick={hideDialog} color="primary">
-                            No
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            )}
-        </>
+        <Dialog
+            open={open}
+            onClose={hideDialog}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">{props.title}</DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    {props.description}
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={confirmRequest} color="primary">
+                    Yes
+                </Button>
+                <Button onClick={hideDialog} color="primary">
+                    No
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 }
 
