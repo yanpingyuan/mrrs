@@ -1,7 +1,6 @@
 import { SignJWT, jwtVerify } from "jose";
 
 const secretKey = process.env.NEXT_PUBLIC_JWT_SECRET || "your-secret-key";
-console.log(secretKey);
 const secret = new TextEncoder().encode(secretKey);
 
 export async function generateToken(payload: {

@@ -7,9 +7,6 @@ import { useRouter } from "next/navigation";
 export default function Header() {
     const [userInfo, setUserInfo] = useLocalStorage<UserInfo>("userInfo", {} as UserInfo);
      const router = useRouter();
-    if (userInfo) {
-        console.log(userInfo)
-    }
     const logout = async () => {
         setUserInfo({} as UserInfo);
         var url = `${process.env.NEXT_PUBLIC_API_BASE_URL as string}/api/auth/logout`;

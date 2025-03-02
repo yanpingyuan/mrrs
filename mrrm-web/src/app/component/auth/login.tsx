@@ -2,7 +2,6 @@
 
 import useLocalStorage from "@/app/hooks/useLocalStorage";
 import TextField from "@mui/material/TextField";
-import { error } from "console";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import validator from "validator";
@@ -38,13 +37,12 @@ export default function LoginForm() {
         tempErrors.email = formData.email&& validator.isEmail(formData.email) ? '' : 'email is required';
         tempErrors.password = formData.password && formData.password.length>0 ? '' : 'password is required';
         setErrors(tempErrors);
-        console.log(errors);
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         var url = `${process.env.NEXT_PUBLIC_API_BASE_URL as string}/api/auth/login`;
-        console.log(url);
+       
         const response = await fetch(url,  {
             method: 'POST',
             headers: {
@@ -53,10 +51,9 @@ export default function LoginForm() {
             body: JSON.stringify(formData),
         });
         if(response.status !== 200) {
-            console.log(response.statusText);
+            const result = await response.json();
             return;
         }else{
-            console.log(response.statusText);
             const result = await response.json();
             setUserInfo(result);
             if(result.IsAdmin){

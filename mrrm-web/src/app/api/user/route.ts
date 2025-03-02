@@ -4,23 +4,23 @@ import bcrypt from 'bcrypt';
 import validator from 'validator';
 import { NextResponse } from "next/server";
 
-export  async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
     const requestMethod = req.method;
     const body = JSON.parse(req.body);
   if (req.method === 'GET') {
       const users = await prisma.user.findMany();
-      res.status(200).json(users)
+      return NextResponse.json(users, { status: 200 });
   }
 }
 
 export async function POST(req: NextApiRequest, res: NextApiResponse) {
   var data = await new Response(req.body).json();
-  console.log(res);
+  
   var {Name, Email, Phone, Password, IsAdmin} =data;
 
   if (validator.isEmail(Email) === false) { //validate email
-    //return NextResponse.json({ message: 'Invalid email' }, { status: 400 })
-    return res.status(400).json({ message: 'Invalid email' })
+    return NextResponse.json({ message: 'Invalid email' }, { status: 400 })
+    //return res.status(400).json({ message: 'Invalid email' })
     
   }
   let isExist = await prisma.user.findUnique({ where: { Email: Email}})

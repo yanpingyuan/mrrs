@@ -28,7 +28,6 @@ import { json } from "stream/consumers";
 export async function POST(req: NextApiRequest,  context: { params: { action: string } }) {
     //const { action } = req.query
   const { action } = await context.params; 
-  console.log(action)
   if (action === 'login') {
     var data = await new Response(req.body).json();
 
