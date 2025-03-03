@@ -1,3 +1,5 @@
+import { Room } from "@prisma/client";
+
 interface UserInfo {
   UserId: number;
   Name: string;
@@ -21,4 +23,13 @@ interface UserFormParams {
   onOk: () => void;
   onCancel: () => void;
   userInfo: UserInfo | null;
+}
+
+
+interface RoomFormParams {
+  openForm: boolean;
+  title: string;
+  onOk: () => void;
+  onCancel: () => void;
+  room: Room | null;
 }

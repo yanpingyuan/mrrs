@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(req: NextApiRequest, context: { params: { id: string } }) {
     const { id } = await context.params; 
-console.log(id)
+
 
   await prisma.room.delete({
       where: { RoomId: parseInt(id)  }

@@ -1,7 +1,7 @@
 "use client";
 
 import ConfirmationDialog from "@/app/component/shared/confirmationDialog";
-import UserFormDialog from "@/app/component/UserFormDialog";
+import UserFormDialog from "@/app/component/forms/UserFormDialog";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
