@@ -3,28 +3,23 @@ import { useEffect, useState } from "react";
 
 
 function UserFormDialog(props: UserFormParams) {
-    const [openForm, setOpenForm] = useState(false);
     const [errors, setErrors] = useState({ name: '', email: '', password: '' });
     const [isFormValid, setIsFormValid] = useState(false);
    
     const [formData, setFormData] = useState({ id: 0, email: '', password: '', isAdmin: false, phone: '', name: ''});
     useEffect(() => {
-        if (props !== null && props.open !== null) {
-            setOpenForm(props.open);
+     
+            
             setFormData({ email: props.userInfo?.Email ?? '',
                  password: '',
                   isAdmin: props.userInfo?.IsAdmin ?? false,
                    phone: props.userInfo?.Phone ?? '',
                     name: props.userInfo?.Name ?? '',
                 id: props.userInfo?.UserId ?? 0});
-        }
+        
     }, [props]);
 
-    const hideUserDialog = () => {
-      
-        setOpenForm(false);
-        
-    };
+ 
 
     const handleChange = (e: any) => {
         e.preventDefault();
@@ -64,16 +59,14 @@ function UserFormDialog(props: UserFormParams) {
     }
       
         console.log(formData);
-        props.response();
-        
-        hideUserDialog();
+        props.onOk();
     };
 
 
     return (
         <Dialog
-            open={openForm}
-            onClose={hideUserDialog}
+            open={props.openForm}
+            onClose={props.onCancel}
         >
             <DialogTitle >{props.title}</DialogTitle>
             <DialogContent>
@@ -137,7 +130,7 @@ function UserFormDialog(props: UserFormParams) {
                 <Button onClick={saveUser} color="primary">
                     保存
                 </Button>
-                <Button onClick={hideUserDialog} color="primary">
+                <Button onClick={props.onCancel} color="primary">
                     取消
                 </Button>
             </DialogActions>

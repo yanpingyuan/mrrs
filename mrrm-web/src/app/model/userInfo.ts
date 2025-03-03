@@ -11,12 +11,14 @@ interface ConfirmParams {
   open: boolean;
   title: string;
   description: string;
-  response: () => void;
+  onOk: () => void;
+  onCancel: () => void;
 }
 
 interface UserFormParams {
-  open: boolean;
+  openForm: boolean;
   title: string;
-  response: () => void;
+  onOk: () => void;
+  onCancel: () => void;
   userInfo: UserInfo | null;
 }

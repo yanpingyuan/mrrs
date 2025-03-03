@@ -44,7 +44,6 @@ export default function Home() {
                 setOpenDelete(false);
             }
         })
-        console.log(currentUser?.Email);
     }
 
     return (
@@ -92,15 +91,17 @@ export default function Home() {
                 title="确认删除"
                 description="你确定要删除这条记录?"
                 open={openDelete}
-                response={deleteUser}
+                onOk={deleteUser}
+                onCancel={() => setOpenDelete(false)}
             >
 
             </ConfirmationDialog>
             <UserFormDialog
-                open={openCreate}   
-                response={() => { getUsers(); }}   
+                openForm={openCreate}   
+                onOk={() => { getUsers(); setOpenCreate(false); }}   
                 title= {currentUser? "编辑用户" : "添加用户"}
                 userInfo={currentUser}
+                onCancel={() => setOpenCreate(false)}
             ></UserFormDialog>
         </div>
     );
