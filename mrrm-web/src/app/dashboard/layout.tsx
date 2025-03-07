@@ -4,6 +4,8 @@ import { headers } from 'next/headers';
 import { StyledRoot } from "../styledRoot";
 import Header from "../component/layout/header";
 import Nav from "../component/layout/nav";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -24,7 +26,7 @@ export default async function RootLayout({
     }
     return (
        
-                
+       
                 <AppRouterCacheProvider>
                     <StyledRoot> <div className="flex flex-col h-screen">
                 <header className="h-20 bg-gray-200  shrink-0 shadow-[rgba(216, 16, 16, 0.87)_0px_5px_4px_0px]">

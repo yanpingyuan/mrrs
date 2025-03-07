@@ -1,4 +1,4 @@
-import { Room } from "@prisma/client";
+import { Room, Reservations } from "@prisma/client";
 
 interface UserInfo {
   UserId: number;
@@ -32,4 +32,12 @@ interface RoomFormParams {
   onOk: () => void;
   onCancel: () => void;
   room: Room | null;
+}
+
+interface ReservationFormParams{
+  openForm: boolean;
+  title: string;
+  onOk: () => void;
+  onCancel: () => void;
+  reservation: Reservations | null;
 }

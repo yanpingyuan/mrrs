@@ -1,11 +1,25 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
-export default function Home({
+export default async function Home({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const cookieStore = await cookies()
+      const userStr = cookieStore.get('loginUser');
+      const userInfo = userStr!=undefined && JSON.parse(userStr?.value as string);
+   
+     if(userInfo?.Email&&userInfo.Email.length>0){
+      if(userInfo.IsAdmin){
+        redirect('/dashboard/meetingRoom')  
+     }else{
+        redirect('/dashboard/meetings')
+     }
+    }
   return (
     <div className="flex flex-col h-screen">
       <header className="h-20  shrink-0">

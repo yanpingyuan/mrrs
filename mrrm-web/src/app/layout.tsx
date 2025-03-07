@@ -3,6 +3,8 @@ import './globals.css';
 import {AppRouterCacheProvider} from '@mui/material-nextjs/v15-appRouter';
 import { StyledRoot } from './styledRoot';
 import { headers } from 'next/headers';
+import useLocalStorage from "./hooks/useLocalStorage";
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,10 +16,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }> ) {
-  const headerList = await headers();
- 
-  const pathname = headerList.get("x-current-path");
   
+
+  const headerList = await headers();
+
+  const pathname = headerList.get("x-current-path");
   if (pathname=== '/login'){
     return <html lang="en" suppressHydrationWarning><body suppressHydrationWarning>{children}</body></html>
   }

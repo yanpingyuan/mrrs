@@ -35,10 +35,10 @@ model Room {
 
 model Reservations {
   ReservationId Int    @id @default(autoincrement())
-  
   StartTime DateTime
   EndTime DateTime
   Note String
+  Name String @default("")
   CreateTime DateTime @default(now())
   User User @relation(fields: [UserId], references: [UserId])
   Room Room @relation(fields: [RoomId], references: [RoomId])
